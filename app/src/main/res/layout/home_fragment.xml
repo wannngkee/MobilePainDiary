@@ -6,16 +6,23 @@
     android:gravity="center">
 
     <TextView
-        android:id="@+id/weather"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-    <TextView
         android:id="@+id/text_message"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="20sp"
+        android:layout_height="79dp"
+        android:gravity="center_horizontal"
         android:text="Your Personalized Mobile Pain Diary"
+        android:textSize="22sp" />
+
+    <TextView
+        android:id="@+id/weather"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:text="Temperature       Humidity        Pressure" />
+    <TextView
+        android:id="@+id/weatherData"
+        android:layout_width="match_parent"
+        android:layout_height="57dp"
         android:gravity="center_horizontal" />
 
     <ImageView
