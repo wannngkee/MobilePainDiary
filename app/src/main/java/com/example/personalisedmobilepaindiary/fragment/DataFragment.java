@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
@@ -23,29 +24,19 @@ public class DataFragment extends Fragment {
         dataBinding = DataFragmentBinding.inflate(inflater, container, false);
         View view = dataBinding.getRoot();
 //        dataBinding.emojiGood.setText(new String(Character.toChars(0x1F60A)));;
-
         dataBinding.locationGroup.setOnCheckedChangeListener(new MultiLineRadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(ViewGroup group, RadioButton button) {
-                Toast.makeText(getActivity(),
-                        button.getText() + " was clicked",
-                        Toast.LENGTH_SHORT).show();
+                String location = button.getText().toString();
             }
         });
-
         return view;
     }
-
-//    public void checkButton(View view){
-//        int radioId = dataBinding.locationGroup.getCheckedRadioButtonId();
-//        RadioButton radioButton = dataBinding.locationGroup.findViewById(radioId);
-//        String location = radioButton.getText().toString();
-//        Log.i("location",location);
-//    }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         dataBinding = null;
     }
+
 }
