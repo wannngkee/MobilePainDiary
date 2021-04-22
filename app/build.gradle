@@ -14,6 +14,7 @@ android {
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         buildConfigField "String", "WEATHER_API_KEY", WEATHER_API_KEY
+        vectorDrawables.useSupportLibrary = true
     }
 
     buildTypes {
@@ -47,6 +48,11 @@ dependencies {
 
     implementation 'androidx.lifecycle:lifecycle-viewmodel:2.3.1'
     implementation 'androidx.lifecycle:lifecycle-livedata:2.3.1'
+
+    //emoji
+    implementation 'com.vanniktech:emoji-ios:0.7.0'
+    //multiline radio group
+    implementation 'com.github.Gavras:MultiLineRadioGroup:v1.0.0.6'
 
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'

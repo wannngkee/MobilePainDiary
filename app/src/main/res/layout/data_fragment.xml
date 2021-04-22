@@ -3,22 +3,163 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="15dp"
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/text_message"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="pain intensity level" />
-<!--        android:gravity="center_horizontal" />-->
+        android:textStyle="bold"
+        android:text="Pain Intensity Level" />
 
-    <com.google.android.material.slider.Slider
-        android:id="@+id/pain_level"
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+<!--        <ImageView-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="match_parent"-->
+<!--            app:srcCompat="@drawable/ic_good" />-->
+
+        <TextView
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="Low" />
+
+        <com.google.android.material.slider.Slider
+            android:id="@+id/level"
+            android:layout_width="190dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:stepSize="1"
+            android:valueFrom="0"
+            android:valueTo="10" />
+
+<!--        <ImageView-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="match_parent"-->
+<!--            app:srcCompat="@drawable/ic_bad" />-->
+        <TextView
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="High" />
+    </LinearLayout>
+
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:stepSize="1"
-        android:valueFrom="0"
-        android:valueTo="10"/>
+        android:text="Location of Pain"
+        android:textStyle="bold" />
+
+    <com.whygraphics.multilineradiogroup.MultiLineRadioGroup xmlns:multi_line_radio_group="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/location_group"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/MyRadioButton"
+        multi_line_radio_group:max_in_row="4"
+        multi_line_radio_group:radio_buttons="@array/location_buttons" />
+<!--    <RadioGroup-->
+<!--        android:id="@+id/location_group"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content">-->
+<!--        <LinearLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:orientation="horizontal">-->
+
+<!--            <RadioButton-->
+<!--                android:id="@+id/back"-->
+<!--                android:layout_width="74dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="back"-->
+<!--                android:theme="@style/MyRadioButton" />-->
+
+<!--            <RadioButton-->
+<!--                android:id="@+id/neck"-->
+<!--                android:layout_width="105dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="neck"-->
+<!--                android:theme="@style/MyRadioButton" />-->
+
+<!--            <RadioButton-->
+<!--                android:id="@+id/head"-->
+<!--                android:layout_width="92dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="head"-->
+<!--                android:theme="@style/MyRadioButton" />-->
+<!--            <RadioButton-->
+<!--                android:id="@+id/knees"-->
+<!--                android:layout_width="90dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:theme="@style/MyRadioButton"-->
+<!--                android:text="knees" />-->
+<!--        </LinearLayout>-->
+<!--        <LinearLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:orientation="horizontal">-->
+
+<!--            <RadioButton-->
+<!--                android:id="@+id/hips"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_weight="1"-->
+<!--                android:text="hips"-->
+<!--                android:theme="@style/MyRadioButton" />-->
+
+<!--            <RadioButton-->
+<!--                android:id="@+id/abdomen"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:theme="@style/MyRadioButton"-->
+<!--                android:layout_weight="1"-->
+<!--                android:text="abdomen" />-->
+<!--            <RadioButton-->
+<!--                android:id="@+id/elbows"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:theme="@style/MyRadioButton"-->
+<!--                android:layout_weight="1"-->
+<!--                android:text="elbows" />-->
+<!--            <RadioButton-->
+<!--                android:id="@+id/shoulders"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:theme="@style/MyRadioButton"-->
+<!--                android:layout_weight="1"-->
+<!--                android:text="shoulders" />-->
+<!--        </LinearLayout>-->
+<!--        <LinearLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:orientation="horizontal">-->
+
+<!--            <RadioButton-->
+<!--                android:id="@+id/shins"-->
+<!--                android:layout_width="74dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:theme="@style/MyRadioButton"-->
+<!--                android:text="shins"/>-->
+
+<!--            <RadioButton-->
+<!--                android:id="@+id/jaw"-->
+<!--                android:layout_width="106dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:theme="@style/MyRadioButton"-->
+<!--                android:text="jaw" />-->
+<!--            <RadioButton-->
+<!--                android:id="@+id/facial"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:theme="@style/MyRadioButton"-->
+<!--                android:text="facial" />-->
+<!--        </LinearLayout>-->
+
+<!--    </RadioGroup>-->
 
 
 </LinearLayout>
