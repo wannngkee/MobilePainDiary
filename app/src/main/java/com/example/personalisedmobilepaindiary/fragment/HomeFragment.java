@@ -39,11 +39,11 @@ public class HomeFragment extends Fragment {
             public void onResponse(Call<SearchResponse> call, Response<SearchResponse> response) {
                 if (response.isSuccessful()) {
                     Main main = response.body().main;
-                    float temp = main.getTemp();
-                    int humidity =  main.getHumidity();
-                    int pressure = main.getPressure();
+                    String temp = main.getTemp() + "°C";
+                    String humidity =  main.getHumidity() + "%";
+                    String pressure = main.getPressure() + "hPa";
                     homeBinding.weatherData
-                            .setText("     "+temp + "                 " + humidity + "%              " + pressure + "hPa");
+                            .setText("     "+temp + "                " + humidity + "            " + pressure );
                 }
                 else {
                     Log.i("Error", "Response failed");

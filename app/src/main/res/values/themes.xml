@@ -29,4 +29,8 @@
 <!--        <item name="colorControlNormal">@color/purple_700</item>-->
         <item name="colorControlActivated">@color/purple_700</item>
     </style>
+    <style name="transparent" parent="Theme.AppCompat.Light">
+        <item name="colorControlNormal">@android:color/transparent</item>
+        <item name="colorControlActivated">@android:color/transparent</item>
+    </style>
 </resources>

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Personalised Mobile Pain Diary</string>
+    <string name="app_name">Pain Diary</string>
     <string-array name="location_buttons">
         <item>back</item>
         <item>neck</item>

@@ -63,4 +63,107 @@
         android:theme="@style/MyRadioButton"
         multi_line_radio_group:max_in_row="4"
         multi_line_radio_group:radio_buttons="@array/location_buttons" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Mood"
+        android:layout_marginTop="8dp"
+        android:textStyle="bold" />
+
+        <RadioGroup
+            android:id="@+id/mood"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/very_low"
+                android:layout_width="55dp"
+                android:layout_height="55dp"
+                android:background="@drawable/sad_selector"
+                android:button="@android:color/transparent" />
+            <RadioButton
+                android:id="@+id/low"
+                android:layout_width="55dp"
+                android:layout_height="55dp"
+                android:button="@android:color/transparent"
+                android:background="@drawable/low_selector" />
+            <RadioButton
+                android:id="@+id/neutral"
+                android:layout_width="55dp"
+                android:layout_height="55dp"
+                android:button="@android:color/transparent"
+                android:background="@drawable/neutral_selector" />
+
+            <RadioButton
+                android:id="@+id/good"
+                android:layout_width="55dp"
+                android:layout_height="55dp"
+                android:background="@drawable/good_selector"
+                android:button="@android:color/transparent" />
+            <RadioButton
+                android:id="@+id/very_good"
+                android:layout_width="55dp"
+                android:layout_height="55dp"
+                android:button="@android:color/transparent"
+                android:background="@drawable/verygood_selector" />
+        </RadioGroup>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="13sp"
+        android:text="Very Low     Low      Average     Good     Very Good" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Walking Step Goal"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/step_goal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="20"
+        android:text="10000"
+        android:theme="@style/MyRadioButton"
+        android:inputType="numberSigned" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Steps For Today"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/current_step"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="20"
+        android:theme="@style/MyRadioButton"
+        android:inputType="numberSigned" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <Button
+            android:id="@+id/edit"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:text="Edit"/>
+        <Button
+            android:id="@+id/save"
+            android:layout_width="wrap_content"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:text="save"/>
+    </LinearLayout>
 </LinearLayout>
