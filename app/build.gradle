@@ -1,6 +1,8 @@
 plugins {
     id 'com.android.application'
+    id 'com.google.gms.google-services'
 }
+apply plugin: 'com.google.gms.google-services'
 
 android {
     compileSdkVersion 30
@@ -8,7 +10,7 @@ android {
 
     defaultConfig {
         applicationId "com.example.personalisedmobilepaindiary"
-        minSdkVersion 16
+        minSdkVersion 21
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
@@ -53,6 +55,15 @@ dependencies {
     implementation 'com.vanniktech:emoji-ios:0.7.0'
     //multiline radio group
     implementation 'com.github.Gavras:MultiLineRadioGroup:v1.0.0.6'
+    //firebase
+    implementation platform('com.google.firebase:firebase-bom:27.1.0')
+    implementation 'com.google.firebase:firebase-analytics'
+    implementation 'com.google.firebase:firebase-auth'
+    implementation 'com.google.firebase:firebase-core'
+    implementation 'com.firebaseui:firebase-ui-auth:7.1.1'
+
+    //cardView
+    implementation "androidx.cardview:cardview:1.0.0"
 
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'

@@ -26,11 +26,15 @@
         parent="ThemeOverlay.MaterialComponents.Light" />
 
     <style name="MyRadioButton" parent="Theme.AppCompat.Light">
-<!--        <item name="colorControlNormal">@color/purple_700</item>-->
         <item name="colorControlActivated">@color/purple_700</item>
     </style>
     <style name="transparent" parent="Theme.AppCompat.Light">
         <item name="colorControlNormal">@android:color/transparent</item>
         <item name="colorControlActivated">@android:color/transparent</item>
     </style>
+    <style name="Theme.NoActionBar" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
 </resources>

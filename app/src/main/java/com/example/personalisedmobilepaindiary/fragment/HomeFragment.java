@@ -43,7 +43,7 @@ public class HomeFragment extends Fragment {
                     String humidity =  main.getHumidity() + "%";
                     String pressure = main.getPressure() + "hPa";
                     homeBinding.weatherData
-                            .setText("     "+temp + "                " + humidity + "            " + pressure );
+                            .setText("     "+temp + "               " + humidity + "            " + pressure );
 
                 }
                 else {

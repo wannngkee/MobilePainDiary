@@ -10,9 +10,11 @@
         android:layout_width="match_parent"
         android:layout_height="79dp"
         android:gravity="center_horizontal"
-        android:text="Your Personalized Mobile Pain Diary"
-        android:textStyle="bold"
-        android:textSize="22sp" />
+        android:text="Write a Pain Diary for Today"
+        android:fontFamily="sans-serif"
+
+        android:textColor="@color/purple_700"
+        android:textSize="25sp" />
     <TextView
         android:id="@+id/weather"
         android:layout_width="match_parent"

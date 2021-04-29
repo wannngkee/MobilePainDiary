@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "858162855853",
+    "project_id": "fit5046-311107",
+    "storage_bucket": "fit5046-311107.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:858162855853:android:8c6af45e1f8d1837e32b24",
+        "android_client_info": {
+          "package_name": "com.example.personalisedmobilepaindiary"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "858162855853-9rd21d12blvfetnp909i1qe0nblda1kn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA4DKGpzCSs850rioRXuGt5Vn8SO4sxXfw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "858162855853-9rd21d12blvfetnp909i1qe0nblda1kn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
