@@ -1,28 +1,29 @@
 package com.example.personalisedmobilepaindiary.fragment;
 
-import android.app.Activity;
+import android.app.AlarmManager;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.CompoundButton;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import com.example.personalisedmobilepaindiary.Notification;
 import com.example.personalisedmobilepaindiary.R;
 import com.example.personalisedmobilepaindiary.databinding.DataFragmentBinding;
-import com.google.android.material.slider.Slider;
-import com.vanniktech.emoji.EmojiTextView;
-import com.whygraphics.multilineradiogroup.MultiLineRadioGroup;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -36,13 +37,17 @@ public class DataFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
+        createNotificationChannel();
         dataBinding = DataFragmentBinding.inflate(inflater, container, false);
         View view = dataBinding.getRoot();
-//        dataBinding.emojiGood.setText(new String(Character.toChars(0x1F60A)));;
+
+
+        dataBinding.timePicker.setIs24HourView(true);
+        dataBinding.timePicker.setCurrentHour(16);
+        dataBinding.timePicker.setCurrentMinute(0);
+
 
         List<String> list = new ArrayList<String>();
-        list.add("");
         list.add("Back");
         list.add("Neck");
         list.add("Head");
@@ -87,6 +92,8 @@ public class DataFragment extends Fragment {
         dataBinding.save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                int hour = dataBinding.timePicker.getCurrentHour();
+                int minute = dataBinding.timePicker.getCurrentMinute();
                 painLevel = Math.round(dataBinding.level.getValue());
                 location = dataBinding.location.getSelectedItem().toString();
                 step = dataBinding.currentStep.getText().toString();
@@ -95,6 +102,7 @@ public class DataFragment extends Fragment {
                 if (mood.isEmpty() || step.isEmpty() || location.isEmpty()) {
                     Toast.makeText(getActivity(), "Please enter all the required fields", Toast.LENGTH_SHORT).show();
                 } else {
+                    dataBinding.timePicker.setEnabled(false);
                     dataBinding.level.setEnabled(false);
                     dataBinding.location.setEnabled(false);
                     for (int i = 0; i < dataBinding.mood.getChildCount(); i++) {
@@ -103,6 +111,17 @@ public class DataFragment extends Fragment {
                     dataBinding.stepGoal.setEnabled(false);
                     dataBinding.currentStep.setEnabled(false);
                     Toast.makeText(getActivity(), "Saved successfully", Toast.LENGTH_SHORT).show();
+
+                    Calendar calendar = Calendar.getInstance();
+                    calendar.set(
+                            calendar.get(Calendar.YEAR),
+                            calendar.get(Calendar.MONTH),
+                            calendar.get(Calendar.DAY_OF_MONTH),
+                            hour,
+                            minute - 2,
+                            0 );
+                    setAlarm(calendar.getTimeInMillis());
+
                 }
             }
         });
@@ -110,6 +129,7 @@ public class DataFragment extends Fragment {
         dataBinding.edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                    dataBinding.timePicker.setEnabled(true);
                     dataBinding.level.setEnabled(true);
                     dataBinding.location.setEnabled(true);
                     for (int i = 0; i < dataBinding.mood.getChildCount(); i++) {
@@ -128,6 +148,27 @@ public class DataFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         dataBinding = null;
+    }
+
+    private void createNotificationChannel() {
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = "PainDiaryChannel";
+            String description = "Channel for Pain Diary";
+            int importantce = NotificationManager.IMPORTANCE_HIGH;
+            NotificationChannel channel = new NotificationChannel("Pain Diary", name, importantce);
+            channel.setDescription(description);
+
+            NotificationManager notificationManager = getActivity().getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+
+        }
+    }
+
+    private void setAlarm(long timeInMillis) {
+        Intent intent = new Intent(getActivity(), Notification.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(getActivity(),0,intent,0);
+        AlarmManager alarmManager = (AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,timeInMillis,AlarmManager.INTERVAL_DAY,pendingIntent);
     }
 
 }
