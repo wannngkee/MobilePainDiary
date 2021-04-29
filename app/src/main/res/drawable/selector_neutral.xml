@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_enabled="false"
+        android:state_checked="true"
+        android:drawable="@drawable/disable_check_neutral"/>
+    <item android:state_enabled="false"
+        android:drawable="@drawable/disable_neutral"/>
     <item android:state_checked="true"
         android:drawable="@drawable/select_neutral" />
     <item android:state_checked="false"

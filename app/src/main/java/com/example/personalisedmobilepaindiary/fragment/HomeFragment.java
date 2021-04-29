@@ -44,6 +44,7 @@ public class HomeFragment extends Fragment {
                     String pressure = main.getPressure() + "hPa";
                     homeBinding.weatherData
                             .setText("     "+temp + "                " + humidity + "            " + pressure );
+
                 }
                 else {
                     Log.i("Error", "Response failed");
@@ -51,7 +52,7 @@ public class HomeFragment extends Fragment {
             }
             @Override
             public void onFailure(Call<SearchResponse> call, Throwable t) {
-                Toast.makeText(getActivity(), t.getMessage(),Toast.LENGTH_SHORT);
+                Toast.makeText(getActivity(), t.getMessage(),Toast.LENGTH_SHORT).show();
             }
         });
 
