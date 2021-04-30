@@ -13,8 +13,6 @@ import android.view.View;
 
 import com.example.personalisedmobilepaindiary.databinding.ActivityMainBinding;
 import com.google.firebase.auth.FirebaseAuth;
-import com.vanniktech.emoji.EmojiManager;
-import com.vanniktech.emoji.ios.IosEmojiProvider;
 
 public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;

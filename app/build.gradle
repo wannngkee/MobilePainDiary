@@ -16,6 +16,7 @@ android {
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         buildConfigField "String", "WEATHER_API_KEY", WEATHER_API_KEY
+        buildConfigField "String", "MAPBOX_ACCESS_TOKEN",  MAPBOX_ACCESS_TOKEN
         vectorDrawables.useSupportLibrary = true
     }
 
@@ -51,10 +52,6 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-viewmodel:2.3.1'
     implementation 'androidx.lifecycle:lifecycle-livedata:2.3.1'
 
-    //emoji
-    implementation 'com.vanniktech:emoji-ios:0.7.0'
-    //multiline radio group
-    implementation 'com.github.Gavras:MultiLineRadioGroup:v1.0.0.6'
     //firebase
     implementation platform('com.google.firebase:firebase-bom:27.1.0')
     implementation 'com.google.firebase:firebase-analytics'
@@ -64,6 +61,12 @@ dependencies {
 
     //cardView
     implementation "androidx.cardview:cardview:1.0.0"
+
+    //mapbox
+    implementation ('com.mapbox.mapboxsdk:mapbox-android-sdk:9.6.1'){
+        exclude group: 'group_name', module: 'module_name'
+    }
+    implementation 'com.mapbox.mapboxsdk:mapbox-android-plugin-annotation-v9:0.9.0'
 
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'

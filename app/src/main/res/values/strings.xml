@@ -1,16 +1,3 @@
 <resources>
     <string name="app_name">Pain Diary</string>
-    <string-array name="location_buttons">
-        <item>back</item>
-        <item>neck</item>
-        <item>head</item>
-        <item>knees</item>
-        <item>hips</item>
-        <item>abdomen</item>
-        <item>elbows</item>
-        <item>shoulders</item>
-        <item>shins</item>
-        <item>jaw</item>
-        <item>facial</item>
-    </string-array>
 </resources>
