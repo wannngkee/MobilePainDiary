@@ -59,7 +59,7 @@ public class LoginActivity extends AppCompatActivity {
                                                     "Login successfully",
                                                     Toast.LENGTH_SHORT).show();
                                             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                                            intent.putExtra("email", email);
+                                            intent.putExtra("loginEmail", email);
                                             startActivity(intent);
                                         } else {
                                             Toast.makeText(getApplicationContext(),
@@ -79,7 +79,7 @@ public class LoginActivity extends AppCompatActivity {
         pwd = binding.password.getText().toString();
 
         // Check for a valid email address.
-        if (email.isEmpty()) {
+        if (email.isEmpty() && email != null) {
             binding.emailError.setError("Please enter an Email");
             isEmailValid = false;
             isValid = false;
@@ -93,7 +93,7 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         // Check for a valid password.
-        if ( pwd.isEmpty()) {
+        if ( pwd.isEmpty() && pwd != null) {
             binding.passError.setError("Please enter the password");
             isPasswordValid = false;
             isValid = false;
