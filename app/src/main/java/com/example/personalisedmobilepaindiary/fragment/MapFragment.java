@@ -50,7 +50,7 @@ public class MapFragment extends Fragment {
         mapBinding.mapBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String strAddress = mapBinding.address.getText().toString();
+                strAddress = mapBinding.address.getText().toString();
                 if (!strAddress.isEmpty() && strAddress != null) {
                     getLocationFromAddress(strAddress);
                 // show on the map
