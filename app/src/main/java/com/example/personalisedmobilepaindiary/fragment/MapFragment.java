@@ -1,5 +1,7 @@
 package com.example.personalisedmobilepaindiary.fragment;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Camera;
 import android.location.Address;
 import android.location.Geocoder;
@@ -15,6 +17,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.example.personalisedmobilepaindiary.BuildConfig;
+import com.example.personalisedmobilepaindiary.R;
 import com.example.personalisedmobilepaindiary.databinding.MapFragmentBinding;
 import com.mapbox.mapboxsdk.Mapbox;
 import com.mapbox.mapboxsdk.camera.CameraPosition;
@@ -22,13 +25,17 @@ import com.mapbox.mapboxsdk.geometry.LatLng;
 import com.mapbox.mapboxsdk.maps.MapboxMap;
 import com.mapbox.mapboxsdk.maps.OnMapReadyCallback;
 import com.mapbox.mapboxsdk.maps.Style;
+import com.mapbox.mapboxsdk.plugins.annotation.Symbol;
+import com.mapbox.mapboxsdk.plugins.annotation.SymbolManager;
+import com.mapbox.mapboxsdk.plugins.annotation.SymbolOptions;
+import com.mapbox.mapboxsdk.utils.BitmapUtils;
 
 import java.util.List;
 
 public class MapFragment extends Fragment {
     private MapFragmentBinding mapBinding;
     String strAddress;
-    LatLng latlng = new LatLng(-45.8696744, 170.50301439999998);
+    LatLng latlng = null;
     public MapFragment(){}
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -44,26 +51,35 @@ public class MapFragment extends Fragment {
             public void onClick(View v) {
                 String strAddress = mapBinding.address.getText().toString();
                 getLocationFromAddress(strAddress);
-                Log.d("latlng", "value:" + latlng);
+                // show on the map
+                mapBinding.mapView.getMapAsync(new OnMapReadyCallback() {
+                    @Override
+                    public void onMapReady(@NonNull MapboxMap mapboxMap) {
+                        mapboxMap.setStyle(Style.MAPBOX_STREETS, new Style.OnStyleLoaded() {
+                            @Override
+                            public void onStyleLoaded(@NonNull Style style) {
+                                CameraPosition position = new CameraPosition.Builder()
+                                        .target(latlng)
+                                        .zoom(13)
+                                        .build();
+                                mapboxMap.setCameraPosition(position);
+
+                                // add marker
+                                style.addImage("location",
+                                        BitmapUtils.getBitmapFromDrawable(getResources().getDrawable(R.drawable.ic_location)));
+                                SymbolManager symbolManager = new SymbolManager(mapBinding.mapView,mapboxMap,style);
+                                symbolManager.setIconAllowOverlap(true);
+                                symbolManager.setTextAllowOverlap(true);
+                                SymbolOptions symbolOptions = new SymbolOptions()
+                                        .withLatLng(latlng)
+                                        .withIconImage("location")
+                                        .withIconSize(1.3f);
+                                symbolManager.create(symbolOptions);
+                            }
+                        });
+                    }});
             }
         });
-
-        // show on the map
-        mapBinding.mapView.getMapAsync(new OnMapReadyCallback() {
-            @Override
-            public void onMapReady(@NonNull MapboxMap mapboxMap) {
-                mapboxMap.setStyle(Style.MAPBOX_STREETS, new Style.OnStyleLoaded() {
-                    @Override
-                    public void onStyleLoaded(@NonNull Style style) {
-                        CameraPosition position = new CameraPosition.Builder()
-                                            .target(latlng)
-                                            .zoom(13)
-                                            .build();
-                        mapboxMap.setCameraPosition(position);
-                    }
-                });
-            }});
-
         return view;
     }
 
@@ -73,7 +89,7 @@ public class MapFragment extends Fragment {
         List<Address> address;
 
         try {
-            address = coder.getFromLocationName(strAddress, 5);
+            address = coder.getFromLocationName(strAddress, 1);
             if (address == null) {
                 latlng = null;
             }
