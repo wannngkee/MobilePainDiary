@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -50,7 +51,8 @@ public class MapFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 String strAddress = mapBinding.address.getText().toString();
-                getLocationFromAddress(strAddress);
+                if (!strAddress.isEmpty() && strAddress != null) {
+                    getLocationFromAddress(strAddress);
                 // show on the map
                 mapBinding.mapView.getMapAsync(new OnMapReadyCallback() {
                     @Override
@@ -78,6 +80,9 @@ public class MapFragment extends Fragment {
                             }
                         });
                     }});
+                 } else {
+                    Toast.makeText(getActivity(), "Please enter your address", Toast.LENGTH_SHORT).show();
+                };
             }
         });
         return view;
