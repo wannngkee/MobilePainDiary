@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.personalisedmobilepaindiary.BuildConfig;
 import com.example.personalisedmobilepaindiary.Retrofit.Main;
@@ -44,7 +45,8 @@ public class HomeFragment extends Fragment {
                     String pressure = main.getPressure() + "hPa";
                     homeBinding.weatherData
                             .setText("     "+temp + "               " + humidity + "            " + pressure );
-
+                    SharedViewModel model = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
+                    model.setInfo(temp,humidity, pressure);
                 }
                 else {
                     Log.i("Error", "Response failed");

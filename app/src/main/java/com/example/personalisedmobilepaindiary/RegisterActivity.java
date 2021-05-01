@@ -63,7 +63,7 @@ public class RegisterActivity extends AppCompatActivity {
         pwd = binding.password.getText().toString();
         confirmPwd = binding.confirmPassword.getText().toString();
         // Check for a valid email address.
-        if (email.isEmpty()) {
+        if (email.isEmpty() && pwd != null) {
             binding.emailError.setError("Please enter the Email");
             isEmailValid = false;
             isValid = false;
@@ -77,7 +77,7 @@ public class RegisterActivity extends AppCompatActivity {
         }
 
         // Check for a valid password.
-        if (pwd.isEmpty()) {
+        if (pwd.isEmpty() && pwd != null) {
             binding.passError.setError("Please enter the password");
             isPasswordValid = false;
             isValid = false;
@@ -94,12 +94,12 @@ public class RegisterActivity extends AppCompatActivity {
             binding.passError.setErrorEnabled(false);
         }
 
-        // Check to confirm password.
-        if (pwd.isEmpty()) {
-            binding.confirmPassError.setError("Please enter the password");
+        // Check to confirm password
+        if (confirmPwd.isEmpty() && confirmPwd != null) {
+            binding.confirmPassError.setError("Please confirm the password");
             isPasswordValid = false;
             isValid = false;
-        } else if (pwd.length() < 6) {
+        } else if (confirmPwd.length() < 6) {
             binding.confirmPassError.setError("Password should be longer than six characters");
             isPasswordValid = false;
             isValid = false;
