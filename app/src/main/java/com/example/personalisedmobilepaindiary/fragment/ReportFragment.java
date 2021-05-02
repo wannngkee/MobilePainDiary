@@ -13,6 +13,7 @@ import androidx.fragment.app.FragmentTransaction;
 import com.example.personalisedmobilepaindiary.R;
 import com.example.personalisedmobilepaindiary.chart.LocationChart;
 import com.example.personalisedmobilepaindiary.chart.StepChart;
+import com.example.personalisedmobilepaindiary.chart.WeatherChart;
 import com.example.personalisedmobilepaindiary.databinding.ReportFragmentBinding;
 
 public class ReportFragment extends Fragment {
@@ -35,7 +36,7 @@ public class ReportFragment extends Fragment {
                         replaceFragment(new StepChart());
                         break;
                     case R.id.weather_chart:
-//                        replaceFragment(new LocationChart());
+                        replaceFragment(new WeatherChart());
                         break;
                 }
             }
