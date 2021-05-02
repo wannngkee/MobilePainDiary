@@ -1,14 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:padding="15dp"
+    android:orientation="vertical">
 
     <TextView
-        android:id="@+id/text_message"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="20sp"
-        android:text="This is Report"
-        android:gravity="center_horizontal" />
+        android:text="Choose a chart from below"
+        android:textStyle="bold"
+        android:textColor="@color/purple_700"
+        android:orientation="horizontal" />
+
+    <RadioGroup
+        android:id="@+id/graph_option"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/MyRadioButton">
+        <RadioButton
+            android:id="@+id/location_chart"
+            android:layout_width="wrap_content"
+            android:text="Pain Location Chart"
+            android:checked="true"
+            android:layout_height="wrap_content" />
+        <RadioButton
+            android:id="@+id/step_chart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Steps Taken Chart" />
+        <RadioButton
+            android:id="@+id/weather_chart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Pain and Weather Relation Chart" />
+    </RadioGroup>
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/graph_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
 </LinearLayout>

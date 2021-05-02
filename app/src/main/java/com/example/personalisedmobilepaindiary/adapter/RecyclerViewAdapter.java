@@ -43,7 +43,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter <RecyclerViewAdapt
     }
     @Override
     public int getItemCount() {
-
         return records.size();
     }
 

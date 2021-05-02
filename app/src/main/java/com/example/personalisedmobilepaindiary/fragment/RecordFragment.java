@@ -1,6 +1,7 @@
 package com.example.personalisedmobilepaindiary.fragment;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.personalisedmobilepaindiary.MainActivity;
 import com.example.personalisedmobilepaindiary.adapter.RecyclerViewAdapter;
 import com.example.personalisedmobilepaindiary.databinding.RecordFragmentBinding;
 import com.example.personalisedmobilepaindiary.entity.PainRecord;
@@ -26,6 +28,9 @@ public class RecordFragment extends Fragment {
     private PainRecordViewModel painRecordViewModel;
     private RecyclerViewAdapter adapter;
     private RecyclerView.LayoutManager layoutManager;
+    private MainActivity activity = (MainActivity) getActivity();
+//    String email = activity.getEmail();
+    String email = "aa@gmail.com";
 
     public RecordFragment(){}
     @Override
@@ -39,7 +44,7 @@ public class RecordFragment extends Fragment {
         recordBinding.record.setLayoutManager(layoutManager);
         painRecordViewModel = ViewModelProvider.AndroidViewModelFactory.
                 getInstance(getActivity().getApplication()).create(PainRecordViewModel.class);
-        painRecordViewModel.getAllPainRecords().observe(getViewLifecycleOwner(), new Observer<List<PainRecord>>() {
+        painRecordViewModel.getAllPainRecords(email).observe(getViewLifecycleOwner(), new Observer<List<PainRecord>>() {
             @Override
             public void onChanged(@Nullable final List<PainRecord> painRecords) {
                 adapter.setData(painRecords);

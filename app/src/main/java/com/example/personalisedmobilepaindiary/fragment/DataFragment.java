@@ -40,6 +40,7 @@ import java.util.concurrent.CompletableFuture;
 public class DataFragment extends Fragment {
     private DataFragmentBinding dataBinding;
     private PainRecordViewModel painRecordViewModel;
+    private MainActivity activity = (MainActivity) getActivity();
     private RecyclerViewAdapter adapter;
     private List<PainRecord> records;
     public DataFragment(){}
@@ -112,6 +113,8 @@ public class DataFragment extends Fragment {
         dataBinding.save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String strStepGoal = dataBinding.stepGoal.getText().toString();
+                int stepGoal = Integer.parseInt(strStepGoal);
                 int hour = dataBinding.timePicker.getCurrentHour();
                 int minute = dataBinding.timePicker.getCurrentMinute();
                 painLevel = Math.round(dataBinding.level.getValue());
@@ -122,12 +125,13 @@ public class DataFragment extends Fragment {
                 if (mood.isEmpty() || strStep.isEmpty() || location.isEmpty()) {
                     Toast.makeText(getActivity(), "Please enter all the required fields", Toast.LENGTH_SHORT).show();
                 } else {
+                    getWeather();
                     Toast.makeText(getActivity(), "Saved successfully", Toast.LENGTH_SHORT).show();
                     setReminderTime(hour,minute - 2);
                     step = Integer.parseInt(strStep);
+                    // pass step goal and current step to viewModel
+                    setStep(stepGoal, step);
                     setEnable(false);
-                    // get weather info from viewModel
-                    getWeather();
                     if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
                         CompletableFuture<PainRecord> painRecordCompletableFuture = painRecordViewModel.findByDateFuture(date,email);
                         painRecordCompletableFuture.thenApply(painRecord -> {
@@ -223,6 +227,12 @@ public class DataFragment extends Fragment {
                 pressure = mPressure;
             }
         });
+    }
+
+    // set step goal and current steps
+    public void setStep(int goal, int step){
+        SharedViewModel model = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
+        model.setStep(goal,step);
     }
 
     public void setEnable(boolean enable) {

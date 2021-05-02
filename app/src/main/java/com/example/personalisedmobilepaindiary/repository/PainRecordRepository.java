@@ -6,6 +6,7 @@ import android.os.Build;
 import androidx.annotation.RequiresApi;
 import androidx.lifecycle.LiveData;
 
+import com.example.personalisedmobilepaindiary.LocationCount;
 import com.example.personalisedmobilepaindiary.dao.PainRecordDAO;
 import com.example.personalisedmobilepaindiary.database.PainRecordDatabase;
 import com.example.personalisedmobilepaindiary.entity.PainRecord;
@@ -22,11 +23,13 @@ public class PainRecordRepository {
     public PainRecordRepository(Application application){
         PainRecordDatabase db = PainRecordDatabase.getInstance(application);
         painRecordDAO = db.painRecordDAO();
-        allPainRecords = painRecordDAO.getAll();
     }
 
-    public LiveData<List<PainRecord>> getAllPainRecords(){
-        return allPainRecords;
+    public LiveData<List<PainRecord>> getAllPainRecords(String email){
+        return painRecordDAO.getAll(email);
+    }
+    public LiveData<List<LocationCount>> getLocationCount(){
+        return painRecordDAO.getLocationCount();
     }
 
     public void insert(final PainRecord painRecord){
@@ -46,15 +49,6 @@ public class PainRecordRepository {
             }
         });
     }
-
-//    public void isRecordExist(final String date, final String email){
-//        PainRecordDatabase.databaseWriteExecutor.execute(new Runnable() {
-//            @Override
-//            public void run() {
-//                isExist = painRecordDAO.isRecordExist(date,email);
-//            }
-//        });
-//    }
 
     public void updatePainRecord (final PainRecord painRecord){
         PainRecordDatabase.databaseWriteExecutor.execute(new Runnable() {
