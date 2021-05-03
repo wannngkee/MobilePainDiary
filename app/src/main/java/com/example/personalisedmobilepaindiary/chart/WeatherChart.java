@@ -1,12 +1,15 @@
 package com.example.personalisedmobilepaindiary.chart;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.core.util.Pair;
@@ -15,21 +18,37 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.personalisedmobilepaindiary.LocationCount;
+import com.example.personalisedmobilepaindiary.R;
 import com.example.personalisedmobilepaindiary.databinding.LocationChartBinding;
 import com.example.personalisedmobilepaindiary.databinding.WeatherChartBinding;
+import com.example.personalisedmobilepaindiary.entity.PainRecord;
 import com.example.personalisedmobilepaindiary.viewmodel.PainRecordViewModel;
+import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.Description;
+import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.components.LegendEntry;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.formatter.PercentFormatter;
+import com.github.mikephil.charting.formatter.ValueFormatter;
+import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.utils.ColorTemplate;
+import com.github.mikephil.charting.utils.EntryXComparator;
 import com.google.android.material.datepicker.CalendarConstraints;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -38,6 +57,12 @@ public class WeatherChart extends Fragment {
     private PainRecordViewModel painRecordViewModel;
     private String start;
     private String end;
+    Long startDate = null;
+    Long endDate = null;
+    long realDate;
+    //    String email = activity.getEmail();
+    String email = "aa@gmail.com";
+    String weatherOption;
 
     public WeatherChart(){};
     @Override
@@ -54,72 +79,147 @@ public class WeatherChart extends Fragment {
                 ArrayAdapter<String>(getActivity() ,android.R.layout.simple_spinner_item, weathers);
         binding.weatherOption.setAdapter(spinnerAdapter);
 
+        weatherOption = binding.weatherOption.getSelectedItem().toString();
+
+        binding.weatherOption.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                weatherOption = parent.getSelectedItem().toString();
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
         // popup date ranger picker
         MaterialDatePicker.Builder<Pair<Long,Long>> builder = MaterialDatePicker.Builder.dateRangePicker();
         final  MaterialDatePicker materialDatePicker = builder.build();
-
-        binding.startDate.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+        binding.dateBtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onFocusChange(View view, boolean hasFocus) {
-                if (hasFocus){
+            public void onClick(View v) {
                 materialDatePicker.show(getActivity().getSupportFragmentManager(), "date_ranger_picker");
                 materialDatePicker.addOnPositiveButtonClickListener(new MaterialPickerOnPositiveButtonClickListener<Pair<Long, Long>>() {
                     @Override public void onPositiveButtonClick(Pair<Long,Long> selection) {
-                        Long startDate = selection.first;
-                        Long endDate = selection.second;
-                        start = new SimpleDateFormat("dd/MM/yyy").format(new Date(startDate));
-                        end = new SimpleDateFormat("dd/MM/yyy").format(new Date(endDate));
-                        Log.i("date", start+end);
-                        binding.startDate.setText(start);
-                        binding.endDate.setText(end);
+                        startDate = selection.first;
+                        endDate = selection.second;
+                        start = new SimpleDateFormat("dd/MM/yyyy").format(new Date(startDate));
+                        end = new SimpleDateFormat("dd/MM/yyyy").format(new Date(endDate));
+                        binding.dateBtn.setText(start + "-" + end);
                     }
-                });}
-        }});
+                });
+            }
+        });
 
-        binding.endDate.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+        binding.chartBtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onFocusChange(View view, boolean hasFocus) {
-                if (hasFocus){
-                materialDatePicker.show(getActivity().getSupportFragmentManager(), "date_ranger_picker");
-                materialDatePicker.addOnPositiveButtonClickListener(new MaterialPickerOnPositiveButtonClickListener<Pair<Long, Long>>() {
-                    @Override public void onPositiveButtonClick(Pair<Long,Long> selection) {
-                        Long startDate = selection.first;
-                        Long endDate = selection.second;
-                        start = new SimpleDateFormat("dd/MM/yyy").format(new Date(startDate));
-                        end = new SimpleDateFormat("dd/MM/yyy").format(new Date(endDate));
-                        Log.i("date", start+end);
-                        binding.startDate.setText(start);
-                        binding.endDate.setText(end);
-                    }
-                });}
-            }});
+            public void onClick(View v) {
+                if (startDate == null && endDate == null){
+                    Toast.makeText(getActivity(),"Please select the date period", Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    binding.weatherChart.setVisibility(View.VISIBLE);
+                    binding.weatherChart.setVisibility(View.VISIBLE);
+                    List<Entry> levelEntries = new ArrayList<>();
+                    List<Entry> tempEntries = new ArrayList<>();
+                    List<Entry> humidityEntries = new ArrayList<>();
+                    List<Entry> pressureEntries = new ArrayList<>();
+                    // lists for correlation
+                    List<Integer> levels = new ArrayList<>();
+                    List<Float> temps = new ArrayList<>();
+                    List<Integer> humidities = new ArrayList<>();
+                    List<Integer> pressures = new ArrayList<>();
+                    painRecordViewModel = ViewModelProvider.AndroidViewModelFactory.
+                            getInstance(getActivity().getApplication()).create(PainRecordViewModel.class);
+                    painRecordViewModel.getAllPainRecords(email).observe(getViewLifecycleOwner(), new Observer<List<PainRecord>>() {
+                        @Override
+                        public void onChanged(@Nullable final List<PainRecord> painRecords) {
+                            for (PainRecord painRecord : painRecords){
+                                try {
+                                    SimpleDateFormat f = new SimpleDateFormat("dd/MM/yyyy");
+                                    Date d = f.parse(painRecord.date);
+                                    realDate = d.getTime();
+                                    if (startDate <= realDate && realDate <= endDate){
+                                        levelEntries.add(new Entry(realDate,painRecord.level));
+                                        tempEntries.add(new Entry(realDate,painRecord.temp));
+                                        humidityEntries.add(new Entry(realDate,painRecord.humidity));
+                                        pressureEntries.add(new Entry(realDate,painRecord.pressure));
+                                        levels.add(painRecord.level);
+                                        temps.add(painRecord.temp);
+                                        humidities.add(painRecord.humidity);
+                                        pressures.add(painRecord.pressure);
+                                    }
+                                } catch (ParseException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                            LineDataSet set = new LineDataSet(levelEntries,"Pain Level");
+                            Collections.sort(levelEntries, new EntryXComparator());
+                            set.setAxisDependency(YAxis.AxisDependency.LEFT);
+                            set.setColor(ColorTemplate.rgb("#ca0020"));
+                            set.setCircleColor(ColorTemplate.rgb("#ca0020"));
+                            LineDataSet set2;
+                            switch (weatherOption){
+                                case "Humidity":
+                                    set2 = new LineDataSet(humidityEntries,"Humidity");
+                                    Collections.sort(humidityEntries, new EntryXComparator());
+                                    break;
+                                case "Pressure":
+                                    set2 = new LineDataSet(pressureEntries,"Pressure");
+                                    Collections.sort(pressureEntries, new EntryXComparator());
+                                    break;
+                                default:
+                                    set2 = new LineDataSet(tempEntries,"Temperature");
+                                    Collections.sort(tempEntries, new EntryXComparator());
+                                    break;
+                            }
+                            set2.setAxisDependency(YAxis.AxisDependency.RIGHT);
+                            set2.setColor(ColorTemplate.rgb("#0571b0"));
+                            set2.setCircleColor(ColorTemplate.rgb("#0571b0"));
+                            List<ILineDataSet> dataSets = new ArrayList<ILineDataSet>();
+                            dataSets.add(set);
+                            dataSets.add(set2);
+                            LineData data = new LineData(dataSets);
+                            binding.weatherChart.setData(data);
+                            binding.weatherChart.notifyDataSetChanged();
+                            binding.weatherChart.invalidate();
+                            Legend legend = binding.weatherChart.getLegend();
+                            legend.setHorizontalAlignment(Legend.LegendHorizontalAlignment.LEFT);
+                            legend.setDrawInside(true);
+                            legend.setYOffset(320);
+                        }
+                    });
 
-//        List<PieEntry> entries = new ArrayList<>();
-//        painRecordViewModel = ViewModelProvider.AndroidViewModelFactory.
-//                getInstance(getActivity().getApplication()).create(PainRecordViewModel.class);
-//
-//        painRecordViewModel.getLocationCount().observe(getViewLifecycleOwner(), new Observer<List<LocationCount>>() {
-//            @Override
-//            public void onChanged(@Nullable final List<LocationCount> locationCounts) {
-//                for (LocationCount locationCount : locationCounts) {
-//                    entries.add(new PieEntry(locationCount.getCount(), locationCount.getLocation()));
-//                }
-//                PieDataSet set = new PieDataSet(entries, " ");
-//                set.setColors(ColorTemplate.COLORFUL_COLORS);
-//                PieData data = new PieData(set);
-//                data.setValueFormatter(new PercentFormatter(binding.weatherChart));
-//                data.setValueTextSize(12);
-//                binding.weatherChart.setData(data);
-//                binding.weatherChart.notifyDataSetChanged();
-//                binding.weatherChart.invalidate();
-//            }
-//
-//        });
-//        Description description = new Description();
-//        description.setText("Pain Location Percentage");
-//        description.setTextSize(15);
-//        description.setPosition(650,100);
-//        binding.weatherChart.setDescription(description);
+                    ValueFormatter formatter = new ValueFormatter() {
+                        @Override
+                        public String getAxisLabel(float value, AxisBase axis) {
+                            Date date = new Date((long) value);
+                            SimpleDateFormat df = new SimpleDateFormat("dd/MM");
+                            String strDate = df.format(date);
+                            return strDate;
+                        }
+                    };
+                    XAxis xAxis = binding.weatherChart.getXAxis();
+                    xAxis.setValueFormatter(formatter);
+                    xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+                    Description description = new Description();
+                    description.setText("Pain and " + weatherOption +" Line Chart");
+                    description.setTextSize(15);
+                    description.setPosition(780,30);
+                    binding.weatherChart.setDescription(description);
+                }
+            }
+        });
+
+        binding.correlationBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
         return view;
+
     }
+
 }

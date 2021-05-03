@@ -33,9 +33,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter <RecyclerViewAdapt
         PainRecord record = records.get(position);
         viewHolder.binding.rvDate.setText(record.date);
         viewHolder.binding.rvEmail.setText(record.email);
-        viewHolder.binding.rvTemp.setText(record.temp);
-        viewHolder.binding.rvHumidity.setText(record.humidity);
-        viewHolder.binding.rvPressure.setText(record.pressure);
+        viewHolder.binding.rvTemp.setText(record.temp + "°C");
+        viewHolder.binding.rvHumidity.setText(record.humidity+"%");
+        viewHolder.binding.rvPressure.setText(record.pressure+"hPa");
         viewHolder.binding.rvLevel.setText("Pain Level " + record.level);
         viewHolder.binding.rvLocation.setText(record.location);
         viewHolder.binding.rvMood.setText(record.mood + " Mood");

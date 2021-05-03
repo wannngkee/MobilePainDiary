@@ -25,17 +25,17 @@ public class PainRecord {
 
     public String date;
 
-    public String temp;
+    public float temp;
 
-    public String humidity;
+    public int humidity;
 
-    public String pressure;
+    public int pressure;
 
     public String email;
 
     public PainRecord(@NonNull int level, @NonNull String location, @NonNull String mood,
-                      @NonNull int step, @NonNull String date, @NonNull String temp,
-                      @NonNull String humidity, @NonNull String pressure, @NonNull String email) {
+                      @NonNull int step, @NonNull String date, @NonNull float temp,
+                      @NonNull int humidity, @NonNull int pressure, @NonNull String email) {
         this.level = level;
         this.location = location;
         this.mood = mood;

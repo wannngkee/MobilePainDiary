@@ -47,9 +47,9 @@ public class DataFragment extends Fragment {
     int painLevel;
     String location = "";
     String mood = "";
-    String temp = "";
-    String humidity = "";
-    String pressure = "";
+    float temp;
+    int humidity;
+    int pressure;
 //    String email = activity.getEmail();
     String email = "aa@gmail.com";
     int step;
@@ -209,22 +209,22 @@ public class DataFragment extends Fragment {
     // get temp, humidity, pressure form viewModel
     public void getWeather() {
         SharedViewModel model = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
-        model.getTemp().observe(getViewLifecycleOwner(), new Observer<String>() {
+        model.getTemp().observe(getViewLifecycleOwner(), new Observer<Float>() {
             @Override
-            public void onChanged(@Nullable String mTemp) {
-                temp = mTemp;
+            public void onChanged(Float aFloat) {
+                temp = aFloat;
             }
         });
-        model.getHumidity().observe(getViewLifecycleOwner(), new Observer<String>() {
+        model.getHumidity().observe(getViewLifecycleOwner(), new Observer<Integer>() {
             @Override
-            public void onChanged(@Nullable String mHumidity) {
-                humidity = mHumidity;
+            public void onChanged(Integer integer) {
+                humidity = integer;
             }
         });
-        model.getPressure().observe(getViewLifecycleOwner(), new Observer<String>() {
+        model.getPressure().observe(getViewLifecycleOwner(), new Observer<Integer>() {
             @Override
-            public void onChanged(@Nullable String mPressure) {
-                pressure = mPressure;
+            public void onChanged(Integer integer) {
+                pressure = integer;
             }
         });
     }

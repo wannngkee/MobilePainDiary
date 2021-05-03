@@ -32,7 +32,6 @@ public class LocationChart extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = LocationChartBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
-
         List<PieEntry> entries = new ArrayList<>();
         painRecordViewModel = ViewModelProvider.AndroidViewModelFactory.
                 getInstance(getActivity().getApplication()).create(PainRecordViewModel.class);

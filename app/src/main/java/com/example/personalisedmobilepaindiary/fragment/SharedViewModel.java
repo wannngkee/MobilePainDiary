@@ -8,9 +8,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SharedViewModel extends ViewModel {
-        private MutableLiveData<String> mTemp;
-        private MutableLiveData<String> mHumidity;
-        private MutableLiveData<String> mPressure;
+        private MutableLiveData<Float> mTemp;
+        private MutableLiveData<Integer> mHumidity;
+        private MutableLiveData<Integer> mPressure;
         private MutableLiveData<Integer> mStepGoal;
         private MutableLiveData<Integer> mStep;
         public SharedViewModel(){
@@ -21,7 +21,7 @@ public class SharedViewModel extends ViewModel {
             mStep = new MutableLiveData<>();
         }
 
-        public void setInfo(String temp, String humidity, String pressure) {
+        public void setInfo(float temp, int humidity, int pressure) {
             mTemp.setValue(temp);
             mHumidity.setValue(humidity);
             mPressure.setValue(pressure);
@@ -32,13 +32,11 @@ public class SharedViewModel extends ViewModel {
             mStep.setValue(step);
         }
 
-        public LiveData<String> getTemp() {
+        public LiveData<Float> getTemp() {
             return mTemp;
         }
-        public LiveData<String> getHumidity() { return mHumidity; }
-        public LiveData<String> getPressure() {
-            return mPressure;
-        }
+        public LiveData<Integer> getHumidity() { return mHumidity; }
+        public LiveData<Integer> getPressure() { return mPressure; }
         public LiveData<Integer> getStepGoal() {return  mStepGoal;}
         public LiveData<Integer> getStep() {return  mStep;}
 };

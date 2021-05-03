@@ -2,69 +2,75 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="15dp"
     android:orientation="vertical">
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <Button
+        android:id="@+id/date_btn"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:text="Start Date"
-            android:layout_height="wrap_content" />
-
-        <EditText
-            android:id="@+id/start_date"
-            android:layout_width="150dp"
-            android:layout_marginLeft="5dp"
-            android:theme="@style/MyRadioButton"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
+        android:text="Select Date"
+        android:backgroundTint="@color/fui_transparent"
+        android:background="?android:attr/selectableItemBackground"
+        android:textColor="@color/purple_700"
+        android:drawableLeft="@drawable/ic_calendar"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <TextView
+        <Button
+            android:id="@+id/weather_btn"
             android:layout_width="wrap_content"
-            android:text="End Date"
-            android:theme="@style/MyRadioButton"
-            android:layout_height="wrap_content" />
-
-        <EditText
-            android:id="@+id/end_date"
-            android:layout_width="150dp"
-            android:layout_marginLeft="5dp"
-            android:theme="@style/MyRadioButton"
-            android:layout_height="wrap_content" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:text="Weather Variable"
-            android:layout_gravity="bottom"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_marginTop="-8dp"
+            android:text="Variable"
+            android:backgroundTint="@color/fui_transparent"
+            android:background="?android:attr/selectableItemBackground"
+            android:textColor="@color/purple_700"
+            android:drawableLeft="@drawable/ic_cloud" />
 
         <Spinner
             android:id="@+id/weather_option"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp" />
+            android:layout_marginTop="-8dp" />
 
     </LinearLayout>
 
+    <Button
+        android:id="@+id/chart_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="-5dp"
+        android:text="Generate Chart" />
+
     <com.github.mikephil.charting.charts.LineChart
         android:id="@+id/weather_chart"
+        android:layout_marginTop="5dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:visibility="invisible"/>
+
+    <Button
+        android:id="@+id/correlation_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="perform correlation test"
+        android:visibility="invisible"/>
+
+        <TextView
+            android:id="@+id/significance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+        <TextView
+            android:id="@+id/r_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
 
 </LinearLayout>

@@ -20,7 +20,10 @@ import com.example.personalisedmobilepaindiary.adapter.RecyclerViewAdapter;
 import com.example.personalisedmobilepaindiary.databinding.RecordFragmentBinding;
 import com.example.personalisedmobilepaindiary.entity.PainRecord;
 import com.example.personalisedmobilepaindiary.viewmodel.PainRecordViewModel;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.PieEntry;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class RecordFragment extends Fragment {

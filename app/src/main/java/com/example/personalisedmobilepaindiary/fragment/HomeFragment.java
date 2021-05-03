@@ -40,11 +40,11 @@ public class HomeFragment extends Fragment {
             public void onResponse(Call<SearchResponse> call, Response<SearchResponse> response) {
                 if (response.isSuccessful()) {
                     Main main = response.body().main;
-                    String temp = main.getTemp() + "°C";
-                    String humidity =  main.getHumidity() + "%";
-                    String pressure = main.getPressure() + "hPa";
+                    float temp = main.getTemp();
+                    int humidity =  main.getHumidity();
+                    int pressure = main.getPressure();
                     homeBinding.weatherData
-                            .setText("     "+temp + "               " + humidity + "            " + pressure );
+                            .setText("     "+temp + "°C             " + humidity + "%             " + pressure + "hPa" );
                     SharedViewModel model = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
                     model.setInfo(temp,humidity, pressure);
                 }
