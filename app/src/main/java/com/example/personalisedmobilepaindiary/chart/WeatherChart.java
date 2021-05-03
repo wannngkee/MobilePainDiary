@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -17,33 +16,27 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.personalisedmobilepaindiary.LocationCount;
-import com.example.personalisedmobilepaindiary.R;
-import com.example.personalisedmobilepaindiary.databinding.LocationChartBinding;
 import com.example.personalisedmobilepaindiary.databinding.WeatherChartBinding;
 import com.example.personalisedmobilepaindiary.entity.PainRecord;
 import com.example.personalisedmobilepaindiary.viewmodel.PainRecordViewModel;
 import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.Legend;
-import com.github.mikephil.charting.components.LegendEntry;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
-import com.github.mikephil.charting.data.PieData;
-import com.github.mikephil.charting.data.PieDataSet;
-import com.github.mikephil.charting.data.PieEntry;
-import com.github.mikephil.charting.formatter.IAxisValueFormatter;
-import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.github.mikephil.charting.utils.EntryXComparator;
-import com.google.android.material.datepicker.CalendarConstraints;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
+
+import org.apache.commons.math3.linear.MatrixUtils;
+import org.apache.commons.math3.linear.RealMatrix;
+import org.apache.commons.math3.stat.correlation.PearsonsCorrelation;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -63,6 +56,8 @@ public class WeatherChart extends Fragment {
     //    String email = activity.getEmail();
     String email = "aa@gmail.com";
     String weatherOption;
+    double pValue;
+    double correlation;
 
     public WeatherChart(){};
     @Override
@@ -125,10 +120,10 @@ public class WeatherChart extends Fragment {
                     List<Entry> humidityEntries = new ArrayList<>();
                     List<Entry> pressureEntries = new ArrayList<>();
                     // lists for correlation
-                    List<Integer> levels = new ArrayList<>();
-                    List<Float> temps = new ArrayList<>();
-                    List<Integer> humidities = new ArrayList<>();
-                    List<Integer> pressures = new ArrayList<>();
+                    List<Double> levels = new ArrayList<>();
+                    List<Double> temps = new ArrayList<>();
+                    List<Double> humidities = new ArrayList<>();
+                    List<Double> pressures = new ArrayList<>();
                     painRecordViewModel = ViewModelProvider.AndroidViewModelFactory.
                             getInstance(getActivity().getApplication()).create(PainRecordViewModel.class);
                     painRecordViewModel.getAllPainRecords(email).observe(getViewLifecycleOwner(), new Observer<List<PainRecord>>() {
@@ -144,10 +139,10 @@ public class WeatherChart extends Fragment {
                                         tempEntries.add(new Entry(realDate,painRecord.temp));
                                         humidityEntries.add(new Entry(realDate,painRecord.humidity));
                                         pressureEntries.add(new Entry(realDate,painRecord.pressure));
-                                        levels.add(painRecord.level);
-                                        temps.add(painRecord.temp);
-                                        humidities.add(painRecord.humidity);
-                                        pressures.add(painRecord.pressure);
+                                        levels.add((double) painRecord.level);
+                                        temps.add((double) painRecord.temp);
+                                        humidities.add((double) painRecord.humidity);
+                                        pressures.add((double) painRecord.pressure);
                                     }
                                 } catch (ParseException e) {
                                     e.printStackTrace();
@@ -163,14 +158,17 @@ public class WeatherChart extends Fragment {
                                 case "Humidity":
                                     set2 = new LineDataSet(humidityEntries,"Humidity");
                                     Collections.sort(humidityEntries, new EntryXComparator());
+                                    testCorrelation( levels, humidities);
                                     break;
                                 case "Pressure":
                                     set2 = new LineDataSet(pressureEntries,"Pressure");
                                     Collections.sort(pressureEntries, new EntryXComparator());
+                                    testCorrelation( levels, pressures);
                                     break;
                                 default:
                                     set2 = new LineDataSet(tempEntries,"Temperature");
                                     Collections.sort(tempEntries, new EntryXComparator());
+                                    testCorrelation( levels, temps);
                                     break;
                             }
                             set2.setAxisDependency(YAxis.AxisDependency.RIGHT);
@@ -214,12 +212,36 @@ public class WeatherChart extends Fragment {
         binding.correlationBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                binding.rValue.setText("Correlation R value: " + correlation);
+                binding.pValue.setText("P value: " + pValue);
             }
         });
 
         return view;
 
+    }
+    public void testCorrelation(List<Double> list1, List<Double>  list2){
+        double[] target1 = new double[list1.size()];
+        double[] target2 = new double[list2.size()];
+        for (int i = 0; i < target1.length; i++) {
+            target1[i] = list1.get(i);
+            Log.i("target1", ""+target1[i]);
+            target2[i] = list2.get(i);
+            Log.i("target2", ""+target2[i]);
+        };
+        double[][] data = new double[][]{target1, target2};
+
+        // create a realmatrix
+        RealMatrix m = MatrixUtils.createRealMatrix(data);
+
+        // correlation test (another method): x-y
+        PearsonsCorrelation pc = new PearsonsCorrelation(m);
+            RealMatrix corM = pc.getCorrelationMatrix();
+
+        // significant test of the correlation coefficient (p-value)
+        RealMatrix pM = pc.getCorrelationPValues();
+        pValue=pM.getEntry(0, 1);
+        correlation=corM.getEntry(0, 1);
     }
 
 }

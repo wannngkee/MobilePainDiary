@@ -29,6 +29,8 @@ import com.example.personalisedmobilepaindiary.adapter.RecyclerViewAdapter;
 import com.example.personalisedmobilepaindiary.databinding.DataFragmentBinding;
 import com.example.personalisedmobilepaindiary.entity.PainRecord;
 import com.example.personalisedmobilepaindiary.viewmodel.PainRecordViewModel;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
