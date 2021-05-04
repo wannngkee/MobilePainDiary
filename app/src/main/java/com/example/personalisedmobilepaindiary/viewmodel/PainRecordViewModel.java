@@ -30,8 +30,8 @@ public class PainRecordViewModel extends AndroidViewModel {
         return painRecordRepository.getAllPainRecords(email);
     }
 
-    public LiveData<List<LocationCount>> getLocationCount(){
-        return painRecordRepository.getLocationCount();
+    public LiveData<List<LocationCount>> getLocationCount(String email){
+        return painRecordRepository.getLocationCount(email);
     }
     public void insert(PainRecord painRecord) {
         painRecordRepository.insert(painRecord);

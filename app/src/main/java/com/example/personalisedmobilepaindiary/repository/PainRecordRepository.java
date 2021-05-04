@@ -28,8 +28,8 @@ public class PainRecordRepository {
     public LiveData<List<PainRecord>> getAllPainRecords(String email){
         return painRecordDAO.getAll(email);
     }
-    public LiveData<List<LocationCount>> getLocationCount(){
-        return painRecordDAO.getLocationCount();
+    public LiveData<List<LocationCount>> getLocationCount(String email){
+        return painRecordDAO.getLocationCount(email);
     }
 
     public void insert(final PainRecord painRecord){

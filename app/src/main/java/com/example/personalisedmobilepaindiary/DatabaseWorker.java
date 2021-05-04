@@ -37,7 +37,7 @@ public class DatabaseWorker extends Worker {
         String date = sdf.format(new Date());
         FirebaseDatabase database = FirebaseDatabase.getInstance("record");
         DatabaseReference dailyRecord = database.getReference();
-        PainRecord record = PainRecordDatabase.getInstance(getApplicationContext()).painRecordDAO().findByDate(date,MainActivity.email);
+        PainRecord record = PainRecordDatabase.getInstance(getApplicationContext()).painRecordDAO().findByDate(date, MainActivity.email);
         if (record != null) {
             dailyRecord.setValue(record);
             Log.i("record send", ""+record);

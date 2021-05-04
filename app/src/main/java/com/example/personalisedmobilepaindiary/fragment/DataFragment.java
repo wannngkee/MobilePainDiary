@@ -52,8 +52,7 @@ public class DataFragment extends Fragment {
     float temp;
     int humidity;
     int pressure;
-//    String email = activity.getEmail();
-    String email = "aa@gmail.com";
+    String email = MainActivity.email;
     int step;
 
     @Override
@@ -65,7 +64,6 @@ public class DataFragment extends Fragment {
         dataBinding.timePicker.setIs24HourView(true);
         dataBinding.timePicker.setCurrentHour(16);
         dataBinding.timePicker.setCurrentMinute(0);
-
 
         List<String> list = new ArrayList<String>();
         list.add("Back");
@@ -128,10 +126,6 @@ public class DataFragment extends Fragment {
                     Toast.makeText(getActivity(), "Please enter all the required fields", Toast.LENGTH_SHORT).show();
                 } else {
                     getWeather();
-                    temp = (float) 28.25;
-                    humidity = 74;
-                    pressure = 1016;
-
                     Toast.makeText(getActivity(), "Saved successfully", Toast.LENGTH_SHORT).show();
                     setReminderTime(hour,minute - 2);
                     step = Integer.parseInt(strStep);

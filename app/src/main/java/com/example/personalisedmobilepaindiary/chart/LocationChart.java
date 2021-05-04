@@ -11,6 +11,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.personalisedmobilepaindiary.LocationCount;
+import com.example.personalisedmobilepaindiary.MainActivity;
 import com.example.personalisedmobilepaindiary.dao.PainRecordDAO;
 import com.example.personalisedmobilepaindiary.databinding.LocationChartBinding;
 import com.example.personalisedmobilepaindiary.viewmodel.PainRecordViewModel;
@@ -28,6 +29,7 @@ public class LocationChart extends Fragment {
     private LocationChartBinding binding;
     private PainRecordViewModel painRecordViewModel;
     public LocationChart(){};
+    String email = MainActivity.email;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = LocationChartBinding.inflate(inflater, container, false);
@@ -36,7 +38,7 @@ public class LocationChart extends Fragment {
         painRecordViewModel = ViewModelProvider.AndroidViewModelFactory.
                 getInstance(getActivity().getApplication()).create(PainRecordViewModel.class);
 
-        painRecordViewModel.getLocationCount().observe(getViewLifecycleOwner(), new Observer<List<LocationCount>>() {
+        painRecordViewModel.getLocationCount(email).observe(getViewLifecycleOwner(), new Observer<List<LocationCount>>() {
             @Override
             public void onChanged(@Nullable final List<LocationCount> locationCounts) {
                 for (LocationCount locationCount : locationCounts) {

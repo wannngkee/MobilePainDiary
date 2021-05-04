@@ -32,8 +32,7 @@ public class RecordFragment extends Fragment {
     private RecyclerViewAdapter adapter;
     private RecyclerView.LayoutManager layoutManager;
     private MainActivity activity = (MainActivity) getActivity();
-//    String email = activity.getEmail();
-    String email = "aa@gmail.com";
+    String email = MainActivity.email;
 
     public RecordFragment(){}
     @Override
