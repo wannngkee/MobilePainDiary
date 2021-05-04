@@ -5,6 +5,7 @@
     android:id="@+id/sign_in"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/purple_700"
     android:gravity="center"
     android:padding="16dp">
 
@@ -123,6 +124,6 @@
         android:text="Create Account"
         android:fontFamily="sans-serif"
         android:textSize="30sp"
-        android:textColor="@color/purple_700"/>
+        android:textColor="@color/white"/>
 
 </RelativeLayout>
