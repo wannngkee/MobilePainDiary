@@ -128,6 +128,10 @@ public class DataFragment extends Fragment {
                     Toast.makeText(getActivity(), "Please enter all the required fields", Toast.LENGTH_SHORT).show();
                 } else {
                     getWeather();
+                    temp = (float) 28.25;
+                    humidity = 74;
+                    pressure = 1016;
+
                     Toast.makeText(getActivity(), "Saved successfully", Toast.LENGTH_SHORT).show();
                     setReminderTime(hour,minute - 2);
                     step = Integer.parseInt(strStep);

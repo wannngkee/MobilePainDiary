@@ -62,24 +62,23 @@
         android:layout_marginRight="15dp"
         android:layout_gravity="center_horizontal"
         android:text="perform correlation test"
-        android:visibility="visible"/>
+        android:visibility="invisible"/>
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
         android:orientation="horizontal">
         <TextView
             android:id="@+id/r_value"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="1"
-            android:layout_weight="1" />
+            android:layout_height="wrap_content" />
         <TextView
             android:id="@+id/p_value"
+            android:paddingStart="15dp"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="2"
-            android:layout_weight="1" />
+            android:layout_height="wrap_content" />
     </LinearLayout>
 
 </LinearLayout>

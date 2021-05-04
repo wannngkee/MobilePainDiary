@@ -54,7 +54,7 @@ public class HomeFragment extends Fragment {
             }
             @Override
             public void onFailure(Call<SearchResponse> call, Throwable t) {
-                Toast.makeText(getActivity(), t.getMessage(),Toast.LENGTH_SHORT).show();
+                Log.i("Error", "Response failed");
             }
         });
 

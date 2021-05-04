@@ -57,7 +57,7 @@ public class WeatherChart extends Fragment {
     String email = "aa@gmail.com";
     String weatherOption;
     double pValue;
-    double correlation;
+    double rValue;
 
     public WeatherChart(){};
     @Override
@@ -114,11 +114,12 @@ public class WeatherChart extends Fragment {
                 }
                 else{
                     binding.weatherChart.setVisibility(View.VISIBLE);
-                    binding.weatherChart.setVisibility(View.VISIBLE);
+                    binding.correlationBtn.setVisibility(View.VISIBLE);
                     List<Entry> levelEntries = new ArrayList<>();
                     List<Entry> tempEntries = new ArrayList<>();
                     List<Entry> humidityEntries = new ArrayList<>();
                     List<Entry> pressureEntries = new ArrayList<>();
+
                     // lists for correlation
                     List<Double> levels = new ArrayList<>();
                     List<Double> temps = new ArrayList<>();
@@ -212,8 +213,8 @@ public class WeatherChart extends Fragment {
         binding.correlationBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                binding.rValue.setText("Correlation R value: " + correlation);
-                binding.pValue.setText("P value: " + pValue);
+                binding.rValue.setText("Correlation R value:\n" + rValue);
+                binding.pValue.setText("P value:\n"+ + pValue);
             }
         });
 
@@ -221,15 +222,12 @@ public class WeatherChart extends Fragment {
 
     }
     public void testCorrelation(List<Double> list1, List<Double>  list2){
-        double[] target1 = new double[list1.size()];
-        double[] target2 = new double[list2.size()];
-        for (int i = 0; i < target1.length; i++) {
-            target1[i] = list1.get(i);
-            Log.i("target1", ""+target1[i]);
-            target2[i] = list2.get(i);
-            Log.i("target2", ""+target2[i]);
+        double[][] data = new double[list1.size()][2];
+        for (int i = 0; i < list1.size(); i++) {
+            data[i][0] = list1.get(i);
+            data[i][1] = list2.get(i);
+
         };
-        double[][] data = new double[][]{target1, target2};
 
         // create a realmatrix
         RealMatrix m = MatrixUtils.createRealMatrix(data);
@@ -241,7 +239,6 @@ public class WeatherChart extends Fragment {
         // significant test of the correlation coefficient (p-value)
         RealMatrix pM = pc.getCorrelationPValues();
         pValue=pM.getEntry(0, 1);
-        correlation=corM.getEntry(0, 1);
+        rValue=corM.getEntry(0, 1);
     }
-
 }
