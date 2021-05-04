@@ -185,7 +185,7 @@ public class WeatherChart extends Fragment {
                             Legend legend = binding.weatherChart.getLegend();
                             legend.setHorizontalAlignment(Legend.LegendHorizontalAlignment.LEFT);
                             legend.setDrawInside(true);
-                            legend.setYOffset(320);
+                            legend.setYOffset(20);
                         }
                     });
 
