@@ -35,14 +35,14 @@ public class DatabaseWorker extends Worker {
     public Result doWork(){
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         String date = sdf.format(new Date());
-        FirebaseDatabase database = FirebaseDatabase.getInstance("record");
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference dailyRecord = database.getReference();
         PainRecord record = PainRecordDatabase.getInstance(getApplicationContext()).painRecordDAO().findByDate(date, MainActivity.email);
         if (record != null) {
-            dailyRecord.setValue(record);
-            Log.i("record send", ""+record);
+            dailyRecord.child("record").push().setValue(record);
+            Log.i("record send", ""+record.date+ " level" + record.level + " "+record.location);
         } else {
-            dailyRecord.setValue("No record for today");
+            dailyRecord.child("record").push().setValue("No record for"+ date);
             Log.i("No record for", " "+ date);
         }
 

@@ -51,10 +51,10 @@ public class MainActivity extends AppCompatActivity {
         long delay = scheduledTime - currentTime;
         //work manager
         PeriodicWorkRequest workRequest = new PeriodicWorkRequest.Builder(DatabaseWorker.class,24,TimeUnit.HOURS)
-                .setInitialDelay(delay, TimeUnit.MINUTES)
+                .setInitialDelay(delay, TimeUnit.MILLISECONDS)
                 .addTag("send_record")
                 .build();
-        WorkManager.getInstance(this).enqueueUniquePeriodicWork("send_record", ExistingPeriodicWorkPolicy.REPLACE,workRequest);
+        WorkManager.getInstance(this).enqueueUniquePeriodicWork("send_record", ExistingPeriodicWorkPolicy.KEEP,workRequest);
 
         // fragments
         setSupportActionBar(binding.appBar.toolbar);
